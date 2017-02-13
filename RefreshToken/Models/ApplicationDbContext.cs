@@ -8,7 +8,6 @@ namespace RefreshToken.Models
         public ApplicationDbContext()
             : base("ApplicationDbContext")
         {
-         
         }
         public DbSet<Client> Clients { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }

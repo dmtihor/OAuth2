@@ -8,16 +8,16 @@ namespace RefreshToken.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<RefreshToken.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)
         {
-            if (context.Clients.Count() > 0)
+            if (context.Clients.Any())
             {
                 return;
             }
@@ -26,17 +26,17 @@ namespace RefreshToken.Migrations
             context.SaveChanges();
         }
 
-        private static List<Client> BuildClientsList()
+        private static IEnumerable<Client> BuildClientsList()
         {
 
-            List<Client> ClientsList = new List<Client>
+            var clientsList = new List<Client>
             {
                 new Client
                 {
                     Id = "webApp",
                     Secret = Helper.GetHash("abc@123"),
                     Name = "Web Client",
-                    ApplicationType = Models.ApplicationTypes.JavaScript,
+                    ApplicationType = Models.ApplicationTypes.Web,
                     Active = true,
                     RefreshTokenLifeTime = 7200,
                     AllowedOrigin = "http://localhost:62032/"
@@ -46,14 +46,14 @@ namespace RefreshToken.Migrations
                     Id = "consoleApp",
                     Secret = Helper.GetHash("123@abc"),
                     Name = "Console Application",
-                    ApplicationType = Models.ApplicationTypes.NativeConfidential,
+                    ApplicationType = Models.ApplicationTypes.Console,
                     Active = true,
                     RefreshTokenLifeTime = 14400,
                     AllowedOrigin = "*"
                 }
             };
 
-            return ClientsList;
+            return clientsList;
         }
     }
 }

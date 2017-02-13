@@ -39,7 +39,7 @@ namespace RefreshToken.Providers
                 return Task.FromResult<object>(null);
             }
 
-            if (client.ApplicationType == Models.ApplicationTypes.NativeConfidential)
+            if (client.ApplicationType == Models.ApplicationTypes.Console)
             {
                 if (string.IsNullOrWhiteSpace(clientSecret))
                 {

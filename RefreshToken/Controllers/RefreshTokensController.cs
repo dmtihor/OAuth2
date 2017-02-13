@@ -21,8 +21,7 @@ namespace RefreshToken.Controllers
         {
             return Ok(Repo.GetAllRefreshTokens());
         }
-
-        //[Authorize(Users = "Admin")]
+        
         [AllowAnonymous]
         [Route("")]
         public async Task<IHttpActionResult> Delete(string tokenId)

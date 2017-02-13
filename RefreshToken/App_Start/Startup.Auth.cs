@@ -14,12 +14,10 @@ namespace RefreshToken
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
         public static GoogleOAuth2AuthenticationOptions GoogleAuthOptions { get; private set; }
         public static FacebookAuthenticationOptions FacebookAuthOptions { get; private set; }
-
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        
         public void ConfigureAuth(IAppBuilder app)
         {
             app.CreatePerOwinContext(ApplicationDbContext.Create);
-            // Configure the db context, user manager and signin manager to use a single instance per request
             app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
 
@@ -32,12 +30,10 @@ namespace RefreshToken
                 Provider = new SimpleAuthorizationServerProvider(),
                 RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
-
-            // Token Generation
+            
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
 
-            //Configure Google External Login
             GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "zzz",
@@ -46,7 +42,6 @@ namespace RefreshToken
             };
             app.UseGoogleAuthentication(GoogleAuthOptions);
 
-            //Configure Facebook External Login
             FacebookAuthOptions = new FacebookAuthenticationOptions()
             {
                 AppId = "zzz",

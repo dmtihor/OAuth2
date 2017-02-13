@@ -23,7 +23,7 @@ namespace RefreshToken.Models
     }
     public enum ApplicationTypes
     {
-        JavaScript = 0,
-        NativeConfidential = 1
+        Web = 0,
+        Console = 1
     };
 }

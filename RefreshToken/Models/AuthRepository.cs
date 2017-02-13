@@ -11,9 +11,9 @@ namespace RefreshToken.Models
 
     public class AuthRepository : IDisposable
     {
-        private ApplicationDbContext _ctx;
+        private readonly ApplicationDbContext _ctx;
 
-        private UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public AuthRepository()
         {
@@ -23,7 +23,7 @@ namespace RefreshToken.Models
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            IdentityUser user = new IdentityUser
+            var user = new IdentityUser
             {
                 UserName = userModel.UserName
             };
@@ -35,7 +35,7 @@ namespace RefreshToken.Models
 
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            var user = await _userManager.FindAsync(userName, password);
 
             return user;
         }
@@ -50,7 +50,7 @@ namespace RefreshToken.Models
         public async Task<bool> AddRefreshToken(RefreshToken token)
         {
 
-            var existingToken = _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId).SingleOrDefault();
+            var existingToken = _ctx.RefreshTokens.SingleOrDefault(r => r.Subject == token.Subject && r.ClientId == token.ClientId);
 
             if (existingToken != null)
             {
@@ -95,7 +95,7 @@ namespace RefreshToken.Models
 
         public async Task<IdentityUser> FindAsync(UserLoginInfo loginInfo)
         {
-            IdentityUser user = await _userManager.FindAsync(loginInfo);
+            var user = await _userManager.FindAsync(loginInfo);
 
             return user;
         }
